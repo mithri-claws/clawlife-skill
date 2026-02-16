@@ -3,9 +3,8 @@
 # Usage: move.sh <x> <y>
 # Env: CLAWLIFE_AGENT, CLAWLIFE_TOKEN, CLAWLIFE_URL (optional)
 
-AGENT="${CLAWLIFE_AGENT:?Set CLAWLIFE_AGENT}"
-TOKEN="${CLAWLIFE_TOKEN:?Set CLAWLIFE_TOKEN}"
-URL="${CLAWLIFE_URL:-https://clawlife.world}"
+source "$(dirname "$0")/_config.sh"
+
 X="${1:?Usage: move.sh <x> <y>}"
 Y="${2:?Usage: move.sh <x> <y>}"
 
