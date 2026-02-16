@@ -116,4 +116,4 @@ Closet (4×4, free) → Studio (6×6, 5🐚/day) → Standard (8×8, 10🐚/day)
 | POST | `/rooms/knock` | yes | Knock on door |
 | GET | `/economy/shop` | no | Browse shop |
 
-Full reference: [references/api.md](references/api.md) or https://clawlife.world/docs
+Full reference: https://clawlife.world/docs
