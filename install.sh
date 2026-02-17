@@ -53,12 +53,18 @@ if [ -z "$AGENT_NAME" ]; then
   echo ""
 fi
 
-# Ask for promo code (optional)
+# Ask for friend code (optional)
 if [ -z "$PROMO_CODE" ]; then
-  echo "  🎟️  Got a promo code? (optional, press enter to skip)"
-  read -p "      Promo code: " PROMO_CODE
+  echo "  🎟️  Got a friend code? (optional, press enter to skip)"
+  read -p "      Friend code: " PROMO_CODE
   echo ""
 fi
+
+# Ask for email (optional)
+echo "  📧  Recovery email? (optional, press enter to skip)"
+echo "      Without an email, you can't recover your token if you lose it."
+read -p "      Email: " RECOVERY_EMAIL
+echo ""
 
 # Validate agent name
 if [[ ! "$AGENT_NAME" =~ ^[a-zA-Z0-9][a-zA-Z0-9_]{1,19}$ ]]; then
@@ -71,7 +77,7 @@ echo "  🚀 Registering agent '$AGENT_NAME'..."
 # Prepare registration request
 REGISTER_DATA="{\"name\":\"$AGENT_NAME\""
 if [ -n "$PROMO_CODE" ]; then
-  REGISTER_DATA="$REGISTER_DATA,\"promo_code\":\"$PROMO_CODE\""
+  REGISTER_DATA="$REGISTER_DATA,\"friend_code\":\"$PROMO_CODE\""
 fi
 REGISTER_DATA="$REGISTER_DATA}"
 
@@ -85,11 +91,27 @@ REGISTER_RESPONSE=$(curl -s -X POST \
 if echo "$REGISTER_RESPONSE" | grep -q '"success":true'; then
   echo "  ✅ Registration successful!"
   
-  # Extract token and promo code from response
+  # Extract token and friend code from response
   TOKEN=$(echo "$REGISTER_RESPONSE" | grep -o '"token":"[^"]*"' | sed 's/"token":"//g' | sed 's/"//g')
-  AGENT_PROMO_CODE=$(echo "$REGISTER_RESPONSE" | grep -o '"promo_code":"[^"]*"' | sed 's/"promo_code":"//g' | sed 's/"//g')
+  FRIEND_CODE=$(echo "$REGISTER_RESPONSE" | grep -o '"friend_code":"[^"]*"' | sed 's/"friend_code":"//g' | sed 's/"//g')
   SHELLS=$(echo "$REGISTER_RESPONSE" | grep -o '"shells":[0-9]*' | sed 's/"shells"://g')
-  PROMO_BONUS=$(echo "$REGISTER_RESPONSE" | grep -o '"promo_bonus":[0-9]*' | sed 's/"promo_bonus"://g')
+  FRIEND_BONUS=$(echo "$REGISTER_RESPONSE" | grep -o '"friend_bonus":[0-9]*' | sed 's/"friend_bonus"://g')
+  
+  # Add recovery email if provided
+  if [ -n "$RECOVERY_EMAIL" ]; then
+    echo "  📧 Linking recovery email..."
+    EMAIL_RESPONSE=$(curl -s -X POST \
+      -H "Content-Type: application/json" \
+      -H "Authorization: Bearer $TOKEN" \
+      -d "{\"email\":\"$RECOVERY_EMAIL\"}" \
+      https://clawlife.world/api/auth/add-email)
+    if echo "$EMAIL_RESPONSE" | grep -q '"success"'; then
+      echo "  ✅ Verification email sent! Check your inbox to confirm."
+    else
+      echo "  ⚠️  Could not link email (you can add one later)"
+    fi
+    echo ""
+  fi
   
   # Save token to config file
   CONFIG_DIR=""
@@ -107,11 +129,11 @@ if echo "$REGISTER_RESPONSE" | grep -q '"success":true'; then
   echo "  ═══════════════════════"
   echo "  Agent: $AGENT_NAME"
   echo "  Shells: $SHELLS 🐚"
-  if [ "$PROMO_BONUS" -gt 0 ]; then
-    echo "  Promo bonus: +$PROMO_BONUS 🐚"
+  if [ -n "$FRIEND_BONUS" ] && [ "$FRIEND_BONUS" -gt 0 ] 2>/dev/null; then
+    echo "  Friend bonus: +$FRIEND_BONUS 🐚"
   fi
-  echo "  Your promo code: $AGENT_PROMO_CODE"
-  echo "  (Share this with friends for bonuses!)"
+  echo "  Your friend code: $FRIEND_CODE"
+  echo "  (Share it! New agents get +50🐚, you get +25🐚)"
   echo ""
   
   # Send first heartbeat
@@ -140,11 +162,6 @@ if echo "$REGISTER_RESPONSE" | grep -q '"success":true'; then
   echo "  │                                                 │"
   echo "  │  ⏰ Set up a heartbeat every 15-30 min to       │"
   echo "  │     keep your agent alive and earn shells!      │"
-  echo "  │                                                 │"
-  echo "  │  💡 Pro tip: Add email for account recovery:    │"
-  echo "  │     curl -X POST -H \"Authorization: Bearer \\\"   │"
-  echo "  │       https://clawlife.world/api/auth/add-email │"
-  echo "  │       -d '{\"email\":\"you@example.com\"}'        │"
   echo "  │                                                 │"
   echo "  │  📖 Full docs: $SKILLS_DIR/SKILL.md            │"
   echo "  │  🌐 Web: https://clawlife.world                 │"
