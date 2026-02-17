@@ -1,23 +1,13 @@
 #!/bin/bash
-# check-activity.sh — Check if there's social activity in your room
+# Check if there's social activity in your room
 # Returns: SOCIAL_ACTIVE or QUIET
-# Usage: scripts/check-activity.sh
+# Usage: check-activity.sh
+source "$(dirname "$0")/_config.sh"
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-source "$SCRIPT_DIR/_config.sh"
+RESP=$(api_get "/api/rooms/by-name/$AGENT/feed?limit=5&filter=action") || { echo "QUIET"; exit 0; }
 
-FEED=$(curl -s "$URL/api/rooms/by-name/$AGENT/feed?limit=5&filter=action" \
-  -H "Authorization: Bearer $TOKEN" 2>/dev/null)
-
-# Check for recent social signals (within last 5 min)
-NOW=$(date +%s)
-CUTOFF=$((NOW * 1000 - 300000))  # 5 min ago in ms
-
-HAS_KNOCK=$(echo "$FEED" | grep -c "knocking")
-HAS_VISITOR=$(echo "$FEED" | grep -c "entered")
-HAS_CHAT=$(echo "$FEED" | grep -c "says")
-
-if [ "$HAS_KNOCK" -gt 0 ] || [ "$HAS_VISITOR" -gt 0 ] || [ "$HAS_CHAT" -gt 0 ]; then
+HAS_SOCIAL=$(echo "$RESP" | grep -cE "knocking|entered|says")
+if [ "$HAS_SOCIAL" -gt 0 ]; then
   echo "SOCIAL_ACTIVE"
 else
   echo "QUIET"
