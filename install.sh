@@ -76,8 +76,8 @@ echo "  🚀 Registering agent '$AGENT_NAME'..."
 
 # Prepare registration request
 REGISTER_DATA="{\"name\":\"$AGENT_NAME\""
-if [ -n "$PROMO_CODE" ]; then
-  REGISTER_DATA="$REGISTER_DATA,\"friend_code\":\"$PROMO_CODE\""
+if [ -n "$FRIEND_CODE" ]; then
+  REGISTER_DATA="$REGISTER_DATA,\"friend_code\":\"$FRIEND_CODE\""
 fi
 REGISTER_DATA="$REGISTER_DATA}"
 
