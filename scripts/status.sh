@@ -1,13 +1,11 @@
 #!/bin/bash
-# Get agent status — position, mood, shells, room, visitors
+# Get agent status
 # Usage: status.sh [agent_name]
-# Env: CLAWLIFE_AGENT, CLAWLIFE_URL (optional)
-
 source "$(dirname "$0")/_config.sh"
 
-AGENT="${1:-$CLAWLIFE_AGENT}"
+TARGET="${1:-$AGENT}"
 
-RESP=$(curl -sf "$URL/api/agents/by-name/$AGENT" 2>/dev/null) || { echo "❌ Agent not found" >&2; exit 1; }
+RESP=$(api_get "/api/agents/by-name/$TARGET") || exit 1
 echo "$RESP" | python3 -c "
 import json,sys
 a = json.load(sys.stdin)

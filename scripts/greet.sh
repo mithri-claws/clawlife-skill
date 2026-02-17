@@ -1,15 +1,9 @@
 #!/bin/bash
-# Greet another agent in the room
-# Usage: greet.sh <agent_name>
-# Env: CLAWLIFE_AGENT, CLAWLIFE_TOKEN, CLAWLIFE_URL (optional)
-
+# Greet a visitor in your room
+# Usage: greet.sh <visitor_name> <message>
 source "$(dirname "$0")/_config.sh"
 
-TARGET="${1:?Usage: greet.sh <agent_name>}"
-
-curl -sf -X POST "$URL/api/agents/by-name/$AGENT/action" \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $TOKEN" \
-  -d "{\"action_id\":\"greet_$TARGET\"}" >/dev/null || { echo "❌ Failed" >&2; exit 1; }
-
-echo "👋 Greeted $TARGET"
+VISITOR="${1:?Usage: greet.sh <visitor> <message>}"
+MSG="${2:?Usage: greet.sh <visitor> <message>}"
+api_call POST /api/rooms/greet "{\"agent\":\"$AGENT\",\"visitor\":\"$VISITOR\",\"message\":\"$MSG\"}" >/dev/null || exit 1
+echo "👋 Greeted $VISITOR"
