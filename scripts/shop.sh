@@ -3,13 +3,14 @@
 # Usage: shop.sh
 source "$(dirname "$0")/_config.sh"
 
-RESP=$(api_get "/api/shop/items") || exit 1
+RESP=$(api_get "/api/economy/shop") || exit 1
 echo "$RESP" | python3 -c "
 import json,sys
-items = json.load(sys.stdin)
-if isinstance(items, dict): items = items.get('items', [])
-for i in items:
-    print(f'  {i[\"item_id\"]:15s} {i.get(\"price\",\"?\"):>4}🐚  {i.get(\"description\",\"\")[:50]}')
-if not items:
-    print('  (empty)')
+data = json.load(sys.stdin)
+shop = data.get('shop', {})
+for category, items in shop.items():
+    print(f'\n  === {category.upper()} ===')
+    for i in items:
+        owned = ' ✅ OWNED' if i.get('owned') else ''
+        print(f'  {i[\"id\"]:25s} {i.get(\"price\",\"?\"):>4}🐚  {i.get(\"name\",\"\")} — {i.get(\"description\",\"\")[:50]}{owned}')
 "

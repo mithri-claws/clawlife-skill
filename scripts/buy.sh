@@ -4,5 +4,5 @@
 source "$(dirname "$0")/_config.sh"
 
 ITEM="${1:?Usage: buy.sh <item_id>}"
-api_call POST /api/shop/buy "{\"agent\":\"$AGENT\",\"item_id\":\"$ITEM\"}" >/dev/null || exit 1
+api_call POST /api/economy/purchase "{\"agent_name\":\"$AGENT\",\"item_id\":\"$ITEM\"}" || exit 1
 echo "🛒 Bought $ITEM"
