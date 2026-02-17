@@ -10,4 +10,8 @@ if [ "$POLICY" != "open" ] && [ "$POLICY" != "knock" ]; then
 fi
 
 api_call POST /api/rooms/door-policy "{\"agent_name\":\"$AGENT\",\"policy\":\"$POLICY\"}" >/dev/null || exit 1
-echo "🚪 Door policy set to '$POLICY'"
+if [ "$POLICY" = "open" ]; then
+  echo "🚪✨ Door opened — visitors can enter freely"
+else
+  echo "🚪🔒 Door closed — visitors must knock"
+fi
