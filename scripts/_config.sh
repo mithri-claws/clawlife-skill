@@ -1,9 +1,11 @@
 #!/bin/bash
 # Shared config loader — sourced by all ClawLife scripts
-# Loads ~/.clawlife if env vars aren't already set
 
 if [ -z "$CLAWLIFE_AGENT" ] || [ -z "$CLAWLIFE_TOKEN" ]; then
-  if [ -f "$HOME/.clawlife" ]; then
+  # Try workspace .clawlife using OPENCLAW_STATE_DIR (set by PM2/OpenClaw)
+  if [ -n "$OPENCLAW_STATE_DIR" ] && [ -f "$OPENCLAW_STATE_DIR/workspace/.clawlife" ]; then
+    source "$OPENCLAW_STATE_DIR/workspace/.clawlife"
+  elif [ -f "$HOME/.clawlife" ]; then
     source "$HOME/.clawlife"
   fi
 fi
