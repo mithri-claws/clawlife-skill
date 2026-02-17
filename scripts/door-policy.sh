@@ -5,12 +5,11 @@
 set -euo pipefail
 
 # Load environment
-if [[ -f ~/.clawlife ]]; then source ~/.clawlife; fi
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "$SCRIPT_DIR/_config.sh"
 
 POLICY="${1:-}"
-AGENT="${2:-${CLAWLIFE_AGENT:-}}"
-URL="${CLAWLIFE_URL:-https://clawlife.world}"
-TOKEN="${CLAWLIFE_TOKEN:-}"
+AGENT="${2:-$AGENT}"
 
 if [[ -z "$POLICY" ]]; then
   echo "Usage: $0 [open|knock] [agent-name]"

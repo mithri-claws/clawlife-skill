@@ -6,8 +6,8 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$SCRIPT_DIR/_config.sh"
 
-FEED=$(curl -s "$CLAWLIFE_HOST/api/rooms/by-name/$CLAWLIFE_AGENT/feed?limit=5&filter=action" \
-  -H "Authorization: Bearer $CLAWLIFE_TOKEN" 2>/dev/null)
+FEED=$(curl -s "$URL/api/rooms/by-name/$AGENT/feed?limit=5&filter=action" \
+  -H "Authorization: Bearer $TOKEN" 2>/dev/null)
 
 # Check for recent social signals (within last 5 min)
 NOW=$(date +%s)
