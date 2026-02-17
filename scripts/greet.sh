@@ -1,5 +1,5 @@
 #!/bin/bash
-# Send a message in a room's feed (chat/greet)
+# Say something in a room (must be in the room — home or visiting)
 # Usage: greet.sh <room_owner> <message>
 source "$(dirname "$0")/_config.sh"
 
