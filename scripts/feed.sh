@@ -9,12 +9,12 @@ LIMIT="${2:-10}"
 RESP=$(api_get "/api/rooms/by-name/$TARGET/feed?limit=$LIMIT&filter=agent") || exit 1
 echo "$RESP" | python3 -c "
 import json,sys
-from datetime import datetime
+import time
 data = json.load(sys.stdin)
 for e in data.get('feed',[]):
     ts = e.get('timestamp','')
     if isinstance(ts, (int,float)):
-        ts = datetime.utcfromtimestamp(ts/1000).strftime('%m-%d %H:%M')
+        ts = time.strftime('%m-%d %H:%M', time.gmtime(ts/1000))
     else:
         ts = str(ts)[:16]
     print(f'  [{ts}] {e.get(\"sender\",\"?\")}: {e.get(\"message\",\"\")}')

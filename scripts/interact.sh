@@ -1,15 +1,16 @@
 #!/bin/bash
-# Interact with furniture
-# Usage: interact.sh <action> <item_id>
+# Interact with furniture (perform an action)
+# Usage: interact.sh <action_id>
+# List available actions: actions.sh
 source "$(dirname "$0")/_config.sh"
 
-ACTION="${1:?Usage: interact.sh <action> <item_id>}"
-ITEM="${2:?Usage: interact.sh <action> <item_id>}"
-
-RESP=$(api_call POST /api/rooms/interact "{\"agent\":\"$AGENT\",\"action\":\"$ACTION\",\"item_id\":\"$ITEM\"}") || exit 1
+ACTION="${1:?Usage: interact.sh <action_id>}"
+RESP=$(api_call POST "/api/agents/by-name/$AGENT/action" "{\"action_id\":\"$ACTION\"}") || exit 1
 echo "$RESP" | python3 -c "
 import json,sys
-data = json.load(sys.stdin)
-msg = data.get('message', data.get('result', 'OK'))
-print(f'✨ {msg}')
-"
+d = json.load(sys.stdin)
+r = d.get('result',{})
+print(f'✨ {r.get(\"message\", r.get(\"description\", \"Done\"))}')
+shells = r.get('shells_earned') or r.get('shell_cost')
+if shells: print(f'   {shells}🐚')
+" 2>/dev/null || echo "✨ Done"

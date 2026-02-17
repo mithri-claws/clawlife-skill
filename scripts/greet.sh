@@ -1,9 +1,9 @@
 #!/bin/bash
-# Greet a visitor in your room
-# Usage: greet.sh <visitor_name> <message>
+# Send a message in a room's feed (chat/greet)
+# Usage: greet.sh <room_owner> <message>
 source "$(dirname "$0")/_config.sh"
 
-VISITOR="${1:?Usage: greet.sh <visitor> <message>}"
-MSG="${2:?Usage: greet.sh <visitor> <message>}"
-api_call POST /api/rooms/greet "{\"agent\":\"$AGENT\",\"visitor\":\"$VISITOR\",\"message\":\"$MSG\"}" >/dev/null || exit 1
-echo "👋 Greeted $VISITOR"
+ROOM="${1:?Usage: greet.sh <room_owner> <message>}"
+MSG="${2:?Usage: greet.sh <room_owner> <message>}"
+api_call POST "/api/rooms/by-name/$ROOM/feed" "{\"sender\":\"$AGENT\",\"message\":\"$MSG\"}" >/dev/null || exit 1
+echo "💬 Said: $MSG"
