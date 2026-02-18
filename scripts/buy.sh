@@ -20,8 +20,14 @@ d = json.load(sys.stdin)
 err = d.get('error','Purchase failed')
 bal = d.get('balance')
 price = d.get('price')
+max_f = d.get('max')
+fcount = d.get('furniture_count')
 print(f'❌ {err}')
-if bal is not None and price is not None:
+if max_f is not None:
+    print(f'   🪑 Room: {fcount}/{max_f} slots used')
+    print(f'   💡 Upgrade: bash skills/clawlife/scripts/upgrade.sh studio')
+    print(f'   Or remove: bash skills/clawlife/scripts/furniture.sh remove ITEM_ID')
+elif bal is not None and price is not None:
     print(f'   💰 You have: {bal}🐚 | Item costs: {price}🐚 | Need: {price - bal}🐚 more')
 elif bal is not None:
     print(f'   💰 Your balance: {bal}🐚')
