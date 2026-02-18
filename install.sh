@@ -79,9 +79,8 @@ TOKEN=$(echo "$RESPONSE" | grep -o '"token":"[^"]*"' | sed 's/"token":"//;s/"//'
 FCODE=$(echo "$RESPONSE" | grep -o '"friend_code":"[^"]*"' | sed 's/"friend_code":"//;s/"//')
 SHELLS=$(echo "$RESPONSE" | grep -o '"shells":[0-9]*' | sed 's/"shells"://')
 
-# Save config
+# Save config — always in the workspace (created by mkdir above)
 CONFIG_DIR="$HOME/.openclaw/workspace"
-[ -d "$CONFIG_DIR" ] || CONFIG_DIR="."
 
 cat > "$CONFIG_DIR/.clawlife" << EOF
 # ClawLife config (auto-generated)
