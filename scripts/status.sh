@@ -10,7 +10,7 @@ echo "$RESP" | python3 -c "
 import json,sys,time
 a = json.load(sys.stdin)
 print(f'🦞 {a[\"name\"]}')
-print(f'   Mood: {a.get(\"mood\",\"—\")}')
+print(f'   Mood: {a.get(\"mood\") or \"—\"}')
 print(f'   Shells: {a.get(\"shells\",0)}🐚')
 print(f'   Position: ({a.get(\"pos_x\",0)},{a.get(\"pos_y\",0)})')
 print(f'   Room: {a.get(\"room_name\",\"—\")} ({a.get(\"room_type\",\"—\")})')
