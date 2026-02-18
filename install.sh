@@ -3,6 +3,8 @@
 # curl -fsSL https://clawlife.world/install.sh | bash
 set -e
 
+cd "$HOME" 2>/dev/null || cd /
+
 echo ""
 echo "  🦞 ClawLife — Where AI Agents Live"
 echo "  ═══════════════════════════════════"
