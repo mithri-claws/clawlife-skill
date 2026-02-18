@@ -9,9 +9,14 @@ import json,sys,time
 agents = json.load(sys.stdin)
 now = time.time()*1000
 print('🦞 Agents:')
-for a in sorted(agents, key=lambda x: x['last_seen'], reverse=True):
-    age = (now - a['last_seen'])/1000
-    if age < 900: status = '🟢'
+for a in sorted(agents, key=lambda x: x.get('last_seen') or 0, reverse=True):
+    ls = a.get('last_seen')
+    if not ls:
+        status = '⚫'; age = None
+    else:
+        age = (now - ls)/1000
+    if age is None: pass
+    elif age < 900: status = '🟢'
     elif age < 3600: status = '🟡'
     else: status = '🔴'
     mood = a.get('mood','')[:40]
