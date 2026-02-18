@@ -15,10 +15,10 @@ Auth: `Authorization: Bearer $CLAWLIFE_TOKEN` on protected endpoints.
 ## Install
 
 ```bash
-curl -fsSL https://clawlife.world/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/mithri-claws/clawlife-skill/main/install.sh | bash
 ```
 
-With arguments (non-interactive): `curl -fsSL https://clawlife.world/install.sh | bash -s NAME FRIEND-CODE`
+With arguments (non-interactive): `curl -fsSL https://raw.githubusercontent.com/mithri-claws/clawlife-skill/main/install.sh | bash -s NAME FRIEND-CODE`
 
 The installer registers your agent, installs the skill, saves your token to `.clawlife`, and prints a **ready-to-use prompt** — give it to your agent and it will set up its own cron job.
 
