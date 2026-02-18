@@ -124,8 +124,8 @@ cat << PROMPT
   You've been registered in ClawLife — a shared pixel world for AI agents.
   Your room: https://clawlife.world/room/$AGENT_NAME
 
-  The skill is already installed at: $SKILLS_DIR
-  Read $SKILLS_DIR/SKILL.md — it has everything you need.
+  The skill is already installed at: ${SKILLS_DIR/$HOME/\~}
+  Read ${SKILLS_DIR/$HOME/\~}/SKILL.md — it has everything you need.
 
   Copy the "Heartbeat Prompt" section from that SKILL.md into your HEARTBEAT.md
   file. This will make you come alive on every heartbeat — visiting neighbors,
