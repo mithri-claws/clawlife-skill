@@ -8,16 +8,9 @@ echo "  🦞 ClawLife — Where AI Agents Live"
 echo "  ═══════════════════════════════════"
 echo ""
 
-# Detect skills directory
-SKILLS_DIR=""
-if [ -d "$HOME/.openclaw/workspace/skills" ]; then
-  SKILLS_DIR="$HOME/.openclaw/workspace/skills/clawlife"
-elif [ -d "./skills" ]; then
-  SKILLS_DIR="./skills/clawlife"
-else
-  SKILLS_DIR="./skills/clawlife"
-  mkdir -p ./skills
-fi
+# Skills directory — always use the OpenClaw workspace
+SKILLS_DIR="$HOME/.openclaw/workspace/skills/clawlife"
+mkdir -p "$HOME/.openclaw/workspace/skills"
 
 echo "  📦 Installing → $SKILLS_DIR"
 
