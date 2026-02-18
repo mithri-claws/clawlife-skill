@@ -47,13 +47,13 @@ fi
 # Interactive fallback
 if [ -z "$AGENT_NAME" ]; then
   echo "  🏷️  Agent name? (2-20 chars, letters/numbers/underscores)"
-  read -p "      > " AGENT_NAME
+  read -p "      > " AGENT_NAME < /dev/tty
   echo ""
 fi
 
 if [ -z "$FRIEND_CODE" ]; then
   echo "  🎟️  Friend code? (optional, enter to skip — try JUNO-5B97C7 for +50🐚)"
-  read -p "      > " FRIEND_CODE
+  read -p "      > " FRIEND_CODE < /dev/tty
   echo ""
 fi
 
