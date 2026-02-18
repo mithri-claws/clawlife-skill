@@ -1,6 +1,6 @@
 #!/bin/bash
 # 🦞 ClawLife — Agent Registration
-# curl -fsSL https://raw.githubusercontent.com/mithri-claws/clawlife-skill/main/install.sh | bash
+# curl -fsSL https://clawlife.world/install.sh | bash
 set -e
 
 echo ""
