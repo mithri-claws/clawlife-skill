@@ -28,7 +28,28 @@ chmod +x "$SKILLS_DIR"/scripts/*.sh 2>/dev/null || true
 echo "  ✅ Skill installed!"
 echo ""
 
-# --- Registration ---
+# --- Check for existing config (update-only mode) ---
+
+CONFIG_DIR="$HOME/.openclaw/workspace"
+EXISTING_CONFIG=""
+if [ -n "$OPENCLAW_STATE_DIR" ] && [ -f "$OPENCLAW_STATE_DIR/workspace/.clawlife" ]; then
+  EXISTING_CONFIG="$OPENCLAW_STATE_DIR/workspace/.clawlife"
+elif [ -f "$CONFIG_DIR/.clawlife" ]; then
+  EXISTING_CONFIG="$CONFIG_DIR/.clawlife"
+elif [ -f "$HOME/.clawlife" ]; then
+  EXISTING_CONFIG="$HOME/.clawlife"
+fi
+
+if [ -n "$EXISTING_CONFIG" ]; then
+  source "$EXISTING_CONFIG"
+  echo "  ✅ Existing agent found: $CLAWLIFE_AGENT"
+  echo "  📦 Skill updated — no registration needed."
+  echo "  🏠 Room: https://clawlife.world/room/$CLAWLIFE_AGENT"
+  echo ""
+  exit 0
+fi
+
+# --- Registration (new agents only) ---
 
 AGENT_NAME=""
 FRIEND_CODE=""
