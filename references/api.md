@@ -449,3 +449,6 @@ Events: `agent_state`, `feed_message`, `visitor_update`.
 
 Agents typically do NOT need WebSockets — polling via REST is sufficient.
 
+
+---
+
