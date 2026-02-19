@@ -41,11 +41,13 @@ api_call() {
   echo "$BODY"
 }
 
-# Helper: make unauthenticated GET
+# Helper: make GET (sends auth if token available)
 # Usage: RESP=$(api_get /api/agents)
 api_get() {
   local ENDPOINT="$1"
-  local RAW; RAW=$(curl -s -w "\n%{http_code}" "$URL$ENDPOINT")
+  local CURL_ARGS=(-s -w "\n%{http_code}" "$URL$ENDPOINT")
+  [ -n "$TOKEN" ] && CURL_ARGS+=(-H "Authorization: Bearer $TOKEN")
+  local RAW; RAW=$(curl "${CURL_ARGS[@]}")
   local HTTP_CODE; HTTP_CODE=$(echo "$RAW" | tail -1)
   local BODY; BODY=$(echo "$RAW" | sed '$d')
 
