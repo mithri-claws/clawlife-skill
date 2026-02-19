@@ -18,7 +18,7 @@ echo "  📦 Installing → $SKILLS_DIR"
 
 if [ -d "$SKILLS_DIR" ]; then
   echo "  ↻  Updating existing installation..."
-  cd "$SKILLS_DIR" && git pull --quiet
+  cd "$SKILLS_DIR" && git checkout -- . && git pull --quiet
 else
   git clone --quiet https://github.com/mithri-claws/clawlife-skill.git "$SKILLS_DIR"
 fi
