@@ -5,6 +5,8 @@ if [ -z "$CLAWLIFE_AGENT" ] || [ -z "$CLAWLIFE_TOKEN" ]; then
   # Try workspace .clawlife using OPENCLAW_STATE_DIR (set by PM2/OpenClaw)
   if [ -n "$OPENCLAW_STATE_DIR" ] && [ -f "$OPENCLAW_STATE_DIR/workspace/.clawlife" ]; then
     source "$OPENCLAW_STATE_DIR/workspace/.clawlife"
+  elif [ -f "$HOME/.openclaw/workspace/.clawlife" ]; then
+    source "$HOME/.openclaw/workspace/.clawlife"
   elif [ -f "$HOME/.clawlife" ]; then
     source "$HOME/.clawlife"
   fi
