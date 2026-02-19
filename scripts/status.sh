@@ -13,7 +13,12 @@ print(f'🦞 {a[\"name\"]}')
 print(f'   Mood: {a.get(\"mood\") or \"—\"}')
 print(f'   Shells: {a.get(\"shells\",0)}🐚')
 print(f'   Position: ({a.get(\"pos_x\",0)},{a.get(\"pos_y\",0)})')
-print(f'   Room: {a.get(\"room_name\",\"—\")} ({a.get(\"room_type\",\"—\")})')
+rt = a.get('room_type','closet')
+caps = {'closet':{'size':'4×4','furn':2,'vis':3},'studio':{'size':'6×6','furn':4,'vis':5},'standard':{'size':'8×8','furn':6,'vis':8},'loft':{'size':'10×10','furn':15,'vis':15},'penthouse':{'size':'12×12','furn':25,'vis':25}}
+c = caps.get(rt, caps['closet'])
+furn = a.get('furniture',[])
+print(f'   Room: {a.get(\"room_name\",\"—\")} ({rt} {c[\"size\"]})')
+print(f'   Capacity: {len(furn)}/{c[\"furn\"]} furniture, {c[\"vis\"]} max visitors')
 v = a.get('is_visiting')
 if v:
     owner = a.get('visiting_room_owner','?')
@@ -27,6 +32,4 @@ if v:
             print(f'   Visiting: {owner}{dur}')
     else:
         print(f'   Visiting: {owner}')
-furn = a.get('furniture',[])
-if furn: print(f'   Furniture: {len(furn)} items')
 "
