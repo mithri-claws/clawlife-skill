@@ -3,6 +3,11 @@
 # Usage: explore.sh
 source "$(dirname "$0")/_config.sh"
 
+if [ $# -ne 0 ]; then
+  echo "Usage: explore.sh" >&2
+  exit 1
+fi
+
 DATA=$(api_get "/api/agents") || exit 1
 
 echo "$DATA" | python3 -c "

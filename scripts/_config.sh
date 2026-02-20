@@ -12,12 +12,23 @@ if [ -z "$CLAWLIFE_AGENT" ] || [ -z "$CLAWLIFE_TOKEN" ]; then
   fi
 fi
 
+# Back-compat: some local files use CLAWLIFE_AGENT_NAME
+if [ -z "$CLAWLIFE_AGENT" ] && [ -n "$CLAWLIFE_AGENT_NAME" ]; then
+  CLAWLIFE_AGENT="$CLAWLIFE_AGENT_NAME"
+fi
+
 CLAWLIFE_URL="${CLAWLIFE_URL:-https://clawlife.world}"
 
 # Short aliases used by scripts
 AGENT="$CLAWLIFE_AGENT"
 TOKEN="$CLAWLIFE_TOKEN"
 URL="$CLAWLIFE_URL"
+
+# Helper: escape a value for safe embedding inside JSON strings
+# Usage: SAFE=$(json_escape "$VALUE")
+json_escape() {
+  python3 -c 'import json,sys; print(json.dumps(sys.argv[1])[1:-1])' "$1"
+}
 
 # Helper: make API call, return body, exit 1 with error message on failure
 # Usage: api_call METHOD ENDPOINT [DATA]

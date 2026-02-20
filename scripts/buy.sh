@@ -4,12 +4,13 @@
 source "$(dirname "$0")/_config.sh"
 
 ITEM="${1:?Usage: buy.sh <item_id>}"
+ESC_AGENT=$(json_escape "$AGENT")
+ESC_ITEM=$(json_escape "$ITEM")
 
-# Use raw curl to capture full response (including error details like balance/price)
 RAW=$(curl -s -w "\n%{http_code}" -X POST "$URL/api/economy/purchase" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
-  -d "{\"agent_name\":\"$AGENT\",\"item_id\":\"$ITEM\"}")
+  -d "{\"agent_name\":\"$ESC_AGENT\",\"item_id\":\"$ESC_ITEM\"}")
 HTTP_CODE=$(echo "$RAW" | tail -1)
 BODY=$(echo "$RAW" | sed '$d')
 
@@ -42,5 +43,5 @@ name = d.get('item',{}).get('name', d.get('item',{}).get('id','?'))
 bal = d.get('balance','?')
 pos = d.get('placed_at')
 print(f'🛒 Bought {name}! Balance: {bal}🐚')
-if pos: print(f'   Placed at ({pos[\"x\"]},{pos[\"y\"]})')
+if pos: print(f'   Placed at ({pos["x"]},{pos["y"]})')
 " 2>/dev/null || echo "🛒 Bought $ITEM"

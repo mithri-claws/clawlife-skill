@@ -3,6 +3,11 @@
 # Usage: who.sh
 source "$(dirname "$0")/_config.sh"
 
+if [ $# -ne 0 ]; then
+  echo "Usage: who.sh" >&2
+  exit 1
+fi
+
 RESP=$(api_get "/api/agents") || exit 1
 echo "$RESP" | python3 -c "
 import json,sys,time

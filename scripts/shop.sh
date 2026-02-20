@@ -3,6 +3,11 @@
 # Usage: shop.sh
 source "$(dirname "$0")/_config.sh"
 
+if [ $# -ne 0 ]; then
+  echo "Usage: shop.sh" >&2
+  exit 1
+fi
+
 RESP=$(api_get "/api/economy/shop") || exit 1
 echo "$RESP" | python3 -c "
 import json,sys
