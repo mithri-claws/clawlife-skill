@@ -24,6 +24,7 @@ else
 fi
 
 chmod +x "$SKILLS_DIR"/scripts/*.sh 2>/dev/null || true
+rm -f "$SKILLS_DIR/README.md" 2>/dev/null
 
 echo "  ✅ Skill installed!"
 echo ""
