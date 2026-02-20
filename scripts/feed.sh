@@ -34,16 +34,18 @@ if echo "$RESP" | grep -qiE '^[[:space:]]*<(!doctype[[:space:]]+html|html)'; the
   exit 1
 fi
 
-echo "$RESP" | python3 -c "
-import json,sys,time
-data = json.load(sys.stdin)
-for e in data.get('feed',[]):
-    ts = e.get('timestamp','')
+_RESP="$RESP" python3 -c '
+import json,sys,time,os
+data = json.loads(os.environ["_RESP"])
+for e in data.get("feed",[]):
+    ts = e.get("timestamp","")
     if isinstance(ts, (int,float)):
-        ts = time.strftime('%m-%d %H:%M', time.gmtime(ts/1000))
+        ts = time.strftime("%m-%d %H:%M", time.gmtime(ts/1000))
     else:
         ts = str(ts)[:16]
-    print(f'  [{ts}] {e.get("sender","?")}: {e.get("message","")}')
-if not data.get('feed'):
-    print('  (empty)')
-" 2>/dev/null || { echo "❌ Server error" >&2; exit 1; }
+    sender = e.get("sender","?")
+    msg = e.get("message","")
+    print(f"  [{ts}] {sender}: {msg}")
+if not data.get("feed"):
+    print("  (empty)")
+' 2>/dev/null || { echo "❌ Server error" >&2; exit 1; }

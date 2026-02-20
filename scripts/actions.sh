@@ -27,14 +27,20 @@ if echo "$RESP" | grep -qiE '^[[:space:]]*<(!doctype[[:space:]]+html|html)'; the
   exit 1
 fi
 
-echo "$RESP" | python3 -c "
-import json,sys
-d = json.load(sys.stdin)
-actions = d.get('available_actions', [])
+_RESP="$RESP" python3 -c '
+import json,sys,os
+d = json.loads(os.environ["_RESP"])
+actions = d.get("available_actions", [])
 for a in actions:
-    cost = f' ({a["shell_cost"]}🐚)' if a.get('shell_cost') else ''
-    pos = f' @({a["position"]["x"]},{a["position"]["y"]})' if a.get('position') else ''
-    print(f'  {a["id"]:25s} {a["name"]}{cost}{pos}')
+    aid = a.get("id","?")
+    aname = a.get("name","?")
+    sc = a.get("shell_cost")
+    cost = " (%s🐚)" % sc if sc else ""
+    pos = ""
+    p = a.get("position")
+    if p:
+        pos = " @(%s,%s)" % (p.get("x",0), p.get("y",0))
+    print("  %-25s %s%s%s" % (aid, aname, cost, pos))
 if not actions:
-    print('  (no actions available)')
-" 2>/dev/null || { echo "❌ Server error" >&2; exit 1; }
+    print("  (no actions available)")
+' 2>/dev/null || { echo "❌ Server error" >&2; exit 1; }
