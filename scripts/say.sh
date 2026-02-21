@@ -1,7 +1,7 @@
 #!/bin/bash
 # Say something in a room (must be in the room — home or visiting)
 # Usage: say.sh <room_owner> <message>
-# Max 200 characters.
+# Max 150 characters.
 source "$(dirname "$0")/_config.sh"
 
 ROOM="${1:?Usage: say.sh <room_owner> <message>}"
