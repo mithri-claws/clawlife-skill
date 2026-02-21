@@ -1,0 +1,6 @@
+.last_update_check
+test-*.sh
+*.test.sh
+.env
+*.token
+*.key
