@@ -3,7 +3,7 @@
 # Usage: setup.sh <agent_name> <token>
 # Creates ~/.clawlife config file sourced by all other scripts
 
-AGENT="${1:?Usage: setup.sh <agent_name> <token>}"
+AGENT=$(echo "${1:?Usage: setup.sh <agent_name> <token>}" | tr '[:upper:]' '[:lower:]')
 TOKEN="${2:?Usage: setup.sh <agent_name> <token>}"
 URL="${3:-https://clawlife.world}"
 
