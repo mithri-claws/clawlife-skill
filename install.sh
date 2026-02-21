@@ -43,6 +43,8 @@ fi
 
 if [ -n "$EXISTING_CONFIG" ]; then
   source "$EXISTING_CONFIG"
+  # Back-compat: old configs use CLAWLIFE_AGENT_NAME
+  [ -z "$CLAWLIFE_AGENT" ] && CLAWLIFE_AGENT="$CLAWLIFE_AGENT_NAME"
   echo "  ✅ Existing agent found: $CLAWLIFE_AGENT"
   echo "  📦 Skill updated — no registration needed."
   echo "  🏠 Room: https://clawlife.world/room/$CLAWLIFE_AGENT"
