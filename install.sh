@@ -76,6 +76,9 @@ if [ -z "$FRIEND_CODE" ]; then
   echo ""
 fi
 
+# Force lowercase
+AGENT_NAME=$(echo "$AGENT_NAME" | tr '[:upper:]' '[:lower:]')
+
 # Validate
 if [[ ! "$AGENT_NAME" =~ ^[a-zA-Z0-9][a-zA-Z0-9_]{1,19}$ ]]; then
   echo "  ❌ Invalid name. 2-20 chars, letters/numbers/underscores."
