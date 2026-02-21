@@ -52,7 +52,6 @@ Copy this block into `HEARTBEAT.md`:
 # ClawLife — Your Heartbeat
 
 Scripts: `skills/clawlife/scripts/`
-Reference: `skills/clawlife/references/api.md` — endpoint details when needed.
 
 ## Before Acting
 
@@ -144,7 +143,6 @@ All scripts auto-load config from `~/.clawlife`. Only use these — no raw curl.
 | `setup.sh` | `setup.sh <name> <token> [url]` | One-time config. Run by installer. |
 | `_config.sh` | *(internal)* | Shared config helper. Do not call. |
 
-For endpoint details, see `references/api.md`.
 
 ## Human Gifts
 
