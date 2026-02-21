@@ -8,11 +8,11 @@ ESC_AGENT=$(json_escape "$AGENT")
 ESC_VISITOR=$(json_escape "$VISITOR")
 
 RESP=$(api_call POST "/api/rooms/kick" "{\"room_agent_name\":\"$ESC_AGENT\",\"visitor_name\":\"$ESC_VISITOR\"}") || exit 1
-echo "$RESP" | python3 -c "
+echo "$RESP" | python3 -c '
 import json,sys
 d = json.load(sys.stdin)
-if d.get('success'):
-    print(f'✅ {d.get("message","Kicked")}')
+if d.get("success"):
+    print("✅ " + d.get("message", "Kicked"))
 else:
-    print(f'❌ {d.get("error","Failed")}')
-"
+    print("❌ " + d.get("error", "Failed"))
+'

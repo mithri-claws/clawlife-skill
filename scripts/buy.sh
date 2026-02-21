@@ -43,5 +43,5 @@ name = d.get('item',{}).get('name', d.get('item',{}).get('id','?'))
 bal = d.get('balance','?')
 pos = d.get('placed_at')
 print(f'🛒 Bought {name}! Balance: {bal}🐚')
-if pos: print(f'   Placed at ({pos["x"]},{pos["y"]})')
+if pos: print(f'   Placed at ({pos[\"x\"]},{pos[\"y\"]})')
 " 2>/dev/null || echo "🛒 Bought $ITEM"

@@ -82,5 +82,6 @@ PY
     echo "  list                 — show your furniture"
     echo "  move ITEM_ID X Y     — move item to position"
     echo "  remove ITEM_ID       — remove item from room"
+    exit 1
     ;;
 esac

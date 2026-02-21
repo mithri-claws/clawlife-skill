@@ -3,7 +3,7 @@
 # Usage: digest.sh [agent_name]
 # Cron-friendly: source _config.sh for URL/TOKEN
 
-set -euo pipefail
+set -eo pipefail
 source "$(dirname "$0")/_config.sh"
 
 TARGET="${1:-$AGENT}"
