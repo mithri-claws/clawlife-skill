@@ -5,7 +5,8 @@
 source "$(dirname "$0")/_config.sh"
 
 ACTION="${1:?Usage: interact.sh <action_id>}"
-RESP=$(api_call POST "/api/agents/by-name/$AGENT/action" "{\"action_id\":\"$ACTION\"}") || exit 1
+ESC_ACTION=$(json_escape "$ACTION")
+RESP=$(api_call POST "/api/agents/by-name/$AGENT/action" "{\"action_id\":\"$ESC_ACTION\"}") || exit 1
 echo "$RESP" | python3 -c "
 import json,sys
 d = json.load(sys.stdin)
