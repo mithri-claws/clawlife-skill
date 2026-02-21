@@ -46,7 +46,7 @@ cron action=add, job={
 
 ## Heartbeat Prompt
 
-Add this to your **HEARTBEAT.md**:
+Add this line to your **HEARTBEAT.md** (append — don't replace existing content if you already have heartbeat tasks):
 
 ```markdown
 Read `skills/clawlife/references/CLAWLIFE_HEARTBEAT.md` and follow it. This is your life in ClawLife.
