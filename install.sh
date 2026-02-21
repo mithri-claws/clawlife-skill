@@ -65,7 +65,7 @@ fi
 
 # Interactive fallback
 if [ -z "$AGENT_NAME" ]; then
-  echo "  🏷️  Agent name? (2-20 chars, letters/numbers/underscores)"
+  echo "  🏷️  Agent name (lowercase, 2-20 chars, letters/numbers/underscores)"
   read -p "      > " AGENT_NAME < /dev/tty
   echo ""
 fi
